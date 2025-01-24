@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Slider
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -21,3 +21,9 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ["name"]
     search_help_text = ["You can search with product name"]
     
+    
+@admin.register(Slider)
+class SliderAmin(admin.ModelAdmin):
+    list_display = ["name", "descr", "created_at", "updated_at"]
+    list_filter = ["name", "created_at"]
+    list_display_links = ["name"]    

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Category, Slider
-
+from django.core.paginator import Paginator
 
 def index(request):
     products = Product.objects.filter(discount__gte = 1)
@@ -13,35 +13,33 @@ def index(request):
     return render(request, "main/index.html", data)
 
 
-def product_details(request, slug):
-    product = get_object_or_404(Product, slug=slug, available=True)
-
-    data = {
-        "product": product
-    }
-    return render(request, "main/product-details.html", data)
-
-
 def shop(request,category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
-   
-    data = {
-        "category": category,
-        "categories": categories,
-        "products": products
-    }  
+    
+    page = request.GET.get("page", 1)
+    paginator = Paginator(products, 3)
+    current_page = paginator.page(int(page))
     
     if category_slug:
         category = get_object_or_404(Category, slug = category_slug)
         products = products.filter(category=category)  
-         
+        paginator = Paginator(products, 1)
+        current_page = paginator.page(int(page))
+    
+    data = {
+        "category": category,
+        "categories": categories,
+        "products": current_page,
+        "slug_url": category_slug
+    }  
+       
     return render(request, "main/shop.html", data)        
 
 
-def category(request, slug):
-    category = get_object_or_404(Category, slug=slug)
+def category(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
     products = category.products.filter(available=True)
     categories = Category.objects.all()
     
@@ -51,6 +49,16 @@ def category(request, slug):
         "categories": categories
     }
     return render(request, "main/category.html", data)   
+
+
+def product_details(request,category_slug, product_slug):
+    product = get_object_or_404(Product, slug=product_slug, available=True)
+    
+    data = {
+        "product": product,
+        "category_slug":category_slug
+    }
+    return render(request, "main/product-details.html", data)
 
 
 def about(request):

@@ -22,7 +22,7 @@
       {% endif %}
   
       {% for cat in categories %}
-        {% if request.get_full_path|slice:"10:" == cat.slug %}
+        {% if request.get_full_path|slice:"6:" == cat.slug %}
           <li>
             <a 
               href="{% url 'main:category' cat.slug %}"

@@ -12,7 +12,7 @@
   </head>
   
   <body>
-    <nav class="bg-emerald-800">
+    <nav class="bg-emerald-800 z-4 sticky top-0" style="border: 1px solid transparent;">
       <div class="container min-h-[90px] mx-auto px-4 py-2 flex justify-between items-center">
         <div>
           <h4>
@@ -20,6 +20,13 @@
           </h4>
         </div>
             <div>
+              <div>
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path class="fill-white" d="M24,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H0V2H1.222a1,1,0,0,1,.993.883L3.8,16.351A3,3,0,0,0,6.778,19H20V17H6.778a1,1,0,0,1-.993-.884L5.654,15H21.836Z"/>
+                  <circle class="fill-white" cx="7" cy="22" r="2"/>
+                  <circle class="fill-white" cx="17" cy="22" r="2"/>
+                </svg>
+              </div>
                 <button data-mobileMenuBtn class="min-[768px]:hidden">
                     <svg viewBox="0 0 490.667 490.667" width="24" height="24">
                       <g class="fill-white">
@@ -31,7 +38,7 @@
                           d="M469.333,373.333h-448C9.551,373.333,0,382.885,0,394.667C0,406.449,9.551,416,21.333,416h448   c11.782,0,21.333-9.551,21.333-21.333C490.667,382.885,481.115,373.333,469.333,373.333z" />
                       </g>
                     </svg>
-                  </button>
+                </button>
                 <div
                   data-menuContainer
                   class="
@@ -114,7 +121,6 @@
     <header>
         <div class="container mx-auto px-4 py-2">
             {% block header %}
-
             {% endblock header %}
         </div>
     </header>

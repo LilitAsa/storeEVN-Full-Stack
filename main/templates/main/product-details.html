@@ -14,12 +14,12 @@
 
 {% block content %}
     <main>
-        <div class="container"> 
-            <div>
+        <div class="container mx-auto px-4 py-2"> 
+            <div class="max-w-[328px] h-[328px]">
                 {% if product.image %}
-                    <img src="{{product.image.url}}" alt="{{product.name}}">
+                    <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
                 {% else %}
-                    <img 
+                    <img class="w-full h-full object-cover"
                         src="https://avatars.mds.yandex.net/i?id=c4b399f48c9bfa476826977cbe679582eb527f54-12647631-images-thumbs&n=13"
                         alt="{{product.name}}"
                     >
@@ -27,11 +27,11 @@
             </div>
             <p>{{product.descr}}</p>
             {% if product.discount %}
-                <p>{{product.discount_price}}</p>
+                <p>$ {{product.discount_price}}</p>
             {% else %}
-                <p>{{product.price}}</p>
+                <p>$ {{product.price}}</p>
             {% endif %}
-            <a href="#">ADD To Cart</a>
+            <a href="#" class="block text-white mt-4 w-fit bg-gray-600 px-4 p-2">ADD To Cart</a>
         </div>
     </main>
 {% endblock content %}

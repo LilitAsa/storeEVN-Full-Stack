@@ -1,4 +1,5 @@
-<ul class="flex gap-4 just">
+{% if products_qty|length > 6 %}
+<ul class="flex gap-4 justify-center my-4">
   <li class="{% if not products.has_previous %} pointer-events-none text-gray-700 {% endif %}">
       <a 
           href="
@@ -27,3 +28,4 @@
       >></a>
   </li>
 </ul>
+{% endif %}

@@ -19,7 +19,7 @@ def shop(request,category_slug=None):
     products = Product.objects.filter(available=True)
     
     page = request.GET.get("page", 1)
-    paginator = Paginator(products, 3)
+    paginator = Paginator(products, 6)
     current_page = paginator.page(int(page))
     
     if category_slug:
@@ -31,8 +31,8 @@ def shop(request,category_slug=None):
     data = {
         "category": category,
         "categories": categories,
+        "products_qty": products,
         "products": current_page,
-        "slug_url": category_slug
     }  
        
     return render(request, "main/shop.html", data)        
@@ -42,11 +42,15 @@ def category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     products = category.products.filter(available=True)
     categories = Category.objects.all()
+    page = request.GET.get("page", 1)
+    paginator = Paginator(products, 6)
+    current_page = paginator.page(int(page))
     
     data = {
+        "categories": categories,
         "category": category,
-        "products": products,
-        "categories": categories
+        "products": current_page,
+        "products_qty": products,
     }
     return render(request, "main/category.html", data)   
 

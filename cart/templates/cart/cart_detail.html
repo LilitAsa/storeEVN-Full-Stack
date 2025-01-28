@@ -1,0 +1,71 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %} Cart {% endblock %}
+
+{% block header %}
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">Shopping Cart</h1>
+  </div>
+{% endblock header %}
+
+
+{% block content %}
+  <main class="container mx-auto px-4 py-2">
+    <h2>Shopping Cart</h2>
+
+    <div>
+      {% for item in cart  %}
+        {% with product=item.product %}
+          <div>
+            <div>
+              {% if product.image %}
+                <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+              {% else %}
+                <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+              {% endif %}
+            </div>
+            <h4>
+              {{product.name}}
+            </h4>
+            {% comment %} <p>Quantity: {{item.quantity}}</p> {% endcomment %}
+            <div>
+            {% if product.discount %}
+              <p class="line-through">$ {{product.price}}</p>
+              <p>$ {{product.discount_price}}</p>
+            {% else %}
+              <p>$ {{product.price}}</p>
+            {% endif %}
+            </p>
+            <div>
+              <form action="{% url 'cart:cart_remove' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value='Remove'>
+              </form>
+            </div>
+          </div>
+        {% endwith %}
+      {% endfor %}
+    </div>
+
+    <div>
+      <h5>Total: $ {{cart.get_total_price}} </h5>
+    </div>
+    <div>
+    <div>
+      <a href="/shop" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800">Continue Shopping</a>
+      <div>
+      {% with cart_quantity=cart|length  %}
+        {% if cart_quantity > 0 %}
+          <a href="{% url 'orders:order_create' %}" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800">Checkout</a>
+        {% endif %}
+      {% endwith %}
+          
+      </div>
+    </div>
+
+      
+    </div>
+  </main>
+{% endblock content %}
+  

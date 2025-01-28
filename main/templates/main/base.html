@@ -19,14 +19,28 @@
             <a href="/" class="text-white text-2xl">StoreEVN</a>
           </h4>
         </div>
-            <div>
+            <div class="flex items-center gap-8">
+              <!-- cart start -->
               <div>
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                  <path class="fill-white" d="M24,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H0V2H1.222a1,1,0,0,1,.993.883L3.8,16.351A3,3,0,0,0,6.778,19H20V17H6.778a1,1,0,0,1-.993-.884L5.654,15H21.836Z"/>
-                  <circle class="fill-white" cx="7" cy="22" r="2"/>
-                  <circle class="fill-white" cx="17" cy="22" r="2"/>
-                </svg>
+                <a href="{% url 'cart:cart_detail' %}" class="relative">
+                  <span class="flex justify-center items-center absolute right-[-12px] top-[-12px] bg-red-600 leading-0 text-white text-[10px] w-5 h-5 rounded-full">
+                    {% with cart_quantity=cart|length %}
+                      {% if cart_quantity > 0 %}
+                        {{cart_quantity}}
+                      {% else %}
+                        0
+                      {% endif %}
+                    {% endwith %}
+                  </span>
+                  <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path class="fill-white" d="M24,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H0V2H1.222a1,1,0,0,1,.993.883L3.8,16.351A3,3,0,0,0,6.778,19H20V17H6.778a1,1,0,0,1-.993-.884L5.654,15H21.836Z"/>
+                    <circle class="fill-white" cx="7" cy="22" r="2"/>
+                    <circle class="fill-white" cx="17" cy="22" r="2"/>
+                  </svg>
+                </a>
               </div>
+              <!-- cart end -->
+
                 <button data-mobileMenuBtn class="min-[768px]:hidden">
                     <svg viewBox="0 0 490.667 490.667" width="24" height="24">
                       <g class="fill-white">

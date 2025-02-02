@@ -1,6 +1,5 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 {% load static %}
-
 
 {% block title %}
     <div class="container mx-auto px-4 py-2">
@@ -10,11 +9,9 @@
     </div>
 {% endblock title%}
 
-
 {% block header %}
     <h1>{{product.name}}</h1>
 {% endblock header %}
-
 
 {% block content %}
     <main>

@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from .forms import UserLoginForm
+from .forms import UserLoginForm, UserRegistrationForm, ProfileForm
+from django.contrib.auth.decorators import login_required
+from django.db.models import Prefetch
+from orders.models import Order, OrderItem
+
 
 def login(request):
     if request.method == "POST":
@@ -21,12 +25,56 @@ def login(request):
 
 
 def registration(request):
-  return render(request, "users/registration.html")
+    if request.method == "POST":
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.instance
+            auth.login(request, user)
+            messages.success(
+                request, f"{user.username} successful registration !"
+            )
+            return HttpResponseRedirect(reverse("users:profile"))
+    else:
+        form = UserRegistrationForm()
+        messages.MessageFailure(
+            request, "Failed registration !"
+        )
+    return render(request, "users/registration.html")
 
 
+@login_required
 def profile(request):
-  return render(request, "users/profile.html")
+    if request.method == "POST":
+        form = ProfileForm(
+            data=request.POST,
+            instance=request.user,
+            files=request.FILES
+        )
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile was changed")
+            return HttpResponseRedirect(reverse("users:profile"))
+    else:
+        form = ProfileForm(instance=request.user)
+
+    orders = Order.objects.filter(user=request.user).prefetch_related(
+        Prefetch(
+            "items",
+            queryset=OrderItem.objects.select_related("product"),
+        )
+    ).order_by("id")
+
+    return render(
+        request,
+        "users/profile.html",
+        {
+            "form": form,
+            "orders": orders
+        }
+    )
 
 
 def logout(request):
-  return render(request, "users/profile.html")
+    auth.logout(request)
+    return redirect(reverse("main:index"))

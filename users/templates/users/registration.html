@@ -1,12 +1,126 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
-{% block title %}
-    StoreEvn | Registration
-{% endblock title %}
+{% block title %} Registration {% endblock %}
 
 {% block header %}
-    <div class="container mx-auto px-4 py-2">
-        <h1 class="text-3xl my-4">Registration</h1>
-    </div>
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">Registration</h1>
+  </div>
 {% endblock header %}
+
+{% block content %}
+  <main>
+    <div class="container mx-auto px-4 py-2">
+      <form class="max-w-[580px]" action="{% url 'users:registration' %}" method="POST">
+        {% csrf_token %}
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>First Name:</span>
+          <input 
+            type="text"
+            name="first_name"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Last Name:</span>
+          <input 
+            type="text"
+            name="last_name"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Username:</span>
+          <input 
+            type="text"
+            name="username"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Email:</span>
+          <input 
+            type="text"
+            name="email"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Password:</span>
+          <input 
+            type="password"
+            name="password1"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Confirm Password:</span>
+          <input 
+            type="password"
+            name="password2"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Country:</span>
+          <input 
+            type="text"
+            name="country"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>City:</span>
+          <input 
+            type="text"
+            name="city"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Address:</span>
+          <input 
+            type="text"
+            name="address"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <label class="flex mb-4 gap-2 justify-between items-center">
+          <span>Postal Code:</span>
+          <input 
+            type="text"
+            name="postal_code"
+            placeholder="Type here..."
+            required
+            class="px-4 py-2 border rounded-md"
+          >
+        </label>
+        <button
+          class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer" 
+          type="submit"
+        > 
+          Create Account
+        </button>
+      </form>
+    </div>
+  </main>
+{% endblock content %}

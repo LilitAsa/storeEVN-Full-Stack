@@ -52,7 +52,7 @@ class Product(models.Model):
     
     
     class Meta:
-        ordering = ["name"]
+        ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["id", "slug"]),
             models.Index(fields=["name"]),

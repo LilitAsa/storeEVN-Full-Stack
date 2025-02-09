@@ -23,6 +23,8 @@ def order_create(request):
                     quantity=item["quantity"]
                 )
             cart.clear()
+            request.session["order_id"] = order.id
+            return redirect(reverse("payment:process"))
     else:
         form = OrderCreateForm(request=request)
 

@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     "main.apps.MainConfig",
     "cart.apps.CartConfig",
     "users.apps.UsersConfig",
-    "orders.apps.OrdersConfig"
+    "orders.apps.OrdersConfig",
+    "payment.apps.PaymentConfig",
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_SESSION_ID = "cart"
 
 AUTH_USER_MODEL ="users.User"
+
+
+STRIPE_PUBLISHABLE_KEY = "pk_test_51QqAlnDCD0WIXm13jEG5aqwTvuBlE3As87QIKSOXQfWABP4DbDF8mBeHgQpKvG43ybUwphMXu0pj5sShOFMsmeFT00LeuasSfj"
+STRIPE_SECRET_KEY = "sk_test_51QqAlnDCD0WIXm13nelqcW5MzMf1GxNx0hRD4u6Bhytx41AQ14I3yLLZ89ZMViyjAABVOnvhz44E61gGdpBlsoaQ00LrLzCj3t"
+STRIPE_API_VERSION = "2022-08-01"
+
+STRIPE_WEBHOOK_SECRET = "whsec_577d2a7123bea9fec8db74503c5f4182318d7ecf854eeca4a0390250683c11dd"

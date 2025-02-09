@@ -3,13 +3,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include(("main.urls","mains"), namespace="main")),
-    path("cart/", include(("cart.urls","cart"), namespace="cart")),
-    path("users/", include(("users.urls","users"), namespace="users")),
-    path("orders/", include(("orders.urls","orders"), namespace="orders")),
+    path("", include("main.urls", namespace="main")),
+    path("cart/", include("cart.urls", namespace="cart")),
+    path("users/", include("users.urls", namespace="users")),
+    path("orders/", include("orders.urls", namespace="orders")),
+    path("payment/", include("payment.urls", namespace="payment")),
 ]
 
 if settings.DEBUG:

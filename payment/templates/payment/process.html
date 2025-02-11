@@ -11,7 +11,7 @@
         <div>
             {% for item in order.items.all %}
                 {% with item=item.product %}
-                    <div>
+                    <div class="mt-4">
                         <div class="max-w-[568px] h-[568px]">
                             {% if item.image %}
                               <img class="w-full h-full object-cover" src="{{item.image.url}}" alt="{{item.name}}">

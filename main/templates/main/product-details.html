@@ -1,46 +1,89 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
+{% block fancy_css %}
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+  />
+{% endblock fancy_css %}
+
+{% block fancy_js %}
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+  <script>
+    Fancybox.bind("[data-fancybox='gallery']", {
+      thumbs: {
+        autoStart: true,
+      },
+      keyboard: {
+        close: "Escape",
+      },
+      slideShow: {
+        autoStart: true,
+      },
+      fullScreen: {
+        autoStart: true,
+      },
+      thumb: {
+        autoStart: true,
+      },
+      animationEffect: "fade",
+      transitionEffect: "slide",
+      loop: true,
+      Images: {
+        initialSize: "fit",
+      }
+    });
+  </script>
+{% endblock fancy_js %}
+
 {% block title %}
-    <div class="container mx-auto px-4 py-2">
-        <h1 class="text-3xl my-4">
-            StoreEVN | {{product.name}}
-        </h1>
-    </div>
-{% endblock title%}
+  StoreEVN | {{product.name}}
+{% endblock title %}
 
 {% block header %}
-    <h1>{{product.name}}</h1>
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">{{product.name}}</h1>
+  </div>
 {% endblock header %}
 
 {% block content %}
-    <main>
-        <div class="container mx-auto px-4 py-2"> 
-            <div class="max-w-[328px] h-[328px]">
-                {% if product.image %}
-                    <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
-                {% else %}
-                    <img class="w-full h-full object-cover"
-                        src="https://avatars.mds.yandex.net/i?id=c4b399f48c9bfa476826977cbe679582eb527f54-12647631-images-thumbs&n=13"
-                        alt="{{product.name}}"
-                    >
-                {% endif %}
-            </div>
-            <p>{{product.descr}}</p>
-            {% if product.discount %}
-                <p>$ {{product.discount_price}}</p>
-            {% else %}
-                <p>$ {{product.price}}</p>
-            {% endif %}
+  <main>
+    <div class="container mx-auto px-4 py-2">
+      <div class="max-w-[568px] h-[568px]">
+        {% if product.image %}
+          <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+        {% else %}
+          <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+        {% endif %}
+      </div>
+      <div class="flex gap-2 my-4">
+        {% for item in product.images.all %}
+          <a
+            data-fancybox="gallery"
+            data-src="{{item.image.url}}"
+            data-caption="{{product.descr}}"
+            class="cursor-zoom-in"
+            aria-hidden="true"
+          >
+          <img src="{{item.image.url}}" width="80" height="40" alt="{{product.name}}" />
+        </a>  
+        {% endfor %}
+      </div>
+      <p class="my-4">{{product.descr}}</p>
+      {% if product.discount %}
+        <p>$ {{product.discount_price}}</p>
+      {% else %}
+        <p>$ {{product.price}}</p>
+      {% endif %}
 
-            <form action="{% url 'cart:cart_add' product.id %}" method="POST">
-                <div>
-                    {% csrf_token %}
-                    {{cart_product_form}}
-                </div>
-                <input type="submit" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer" value="Add To Cart">
-            </form>
+      <form action="{% url 'cart:cart_add' product.id %}" method="POST">
+        <div>
+          {% csrf_token %}
+          {{cart_product_form}}
         </div>
-    </main>
+        <input type="submit" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer" value="Add To Cart">
+      </form>
+    </div>
+  </main>
 {% endblock content %}
-    

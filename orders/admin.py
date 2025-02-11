@@ -1,10 +1,23 @@
 from django.contrib import admin
 from .models import Order, OrderItem
-
+from django.utils.safestring import mark_safe
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     raw_id_fields = ["product"]
+    
+
+def order_stripe_payment(obj):
+    print(obj.stripe_id)
+    if obj.stripe_id:
+        url = f'https://dashboard.stripe.com/payments/{obj.stripe_id}'
+        html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
+        return mark_safe(html)
+    return '-'
+
+order_stripe_payment.short_description = "Stripe Payment"
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
